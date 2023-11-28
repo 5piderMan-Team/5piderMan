@@ -1,22 +1,22 @@
 # 数据库
-DB_HOST = ??  # 将 'IP1' 替换为实际的 IP1 地址
+
+DB_HOST = "??"  # 将 'IP1' 替换为实际的 IP1 地址
 DB_PORT = ??  # 如果端口号不是默认的 3306，请将其替换为实际的端口号
 DB_USER = ??
 DB_PASSWORD = ??
 DB_NAME = ??
-
 # 请求资源
 base_url = "https://www.lagou.com/wn/zhaopin?fromSearch=true&kd="
 part_url = "&pn="
 headers = {
     'Connection': '??',
-    'User-Agent':
-        '??',
-    'Cookie':
-        '??',
+    'User-Agent':'??',
+
+    'Cookie':'??',
+
     'Host': '??',
-    'Referer':
-        '??'
+    'Referer':'??'
+
 }
 
 # 存储

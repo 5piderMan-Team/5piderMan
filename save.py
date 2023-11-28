@@ -19,4 +19,4 @@ def Save_to_MySql(cursor, conn, jobs):
             conn.rollback()
             print("数据插入失败:", repr(e))
 
-        print("当前页面数据插入成功！")
+    print("当前页面数据插入成功！")
