@@ -23,7 +23,8 @@ def parse(content):
     # 企业大体状态   ---- Error : index out of range
     companies_status = tree.xpath('//div[@class="industry__1HBkr"]')  # 数据服务｜咨询 / 未融资 / 50-150人
     # 领域
-    tags_ = tree.xpath('//div[@class="ir___QwEG"]')  # C++科技金融  不同个数的span
+    divs_ = tree.xpath('//div[@class="ir___QwEG"]')  # C++科技金融  不同个数的span
+    # tags_count = len(tags_)
     # 福利
     welfares_ = tree.xpath('//div[@class="il__3lk85"]')  # “年轻团队；发展前景；技术大牛带教”
     # 跳转链接
@@ -56,13 +57,23 @@ def parse(content):
             company_status_industry = "N/A"
             company_status_Financing_stage = "N/A"
             company_status_company_size = "N/A"
-        tag = tags_[i].text_content()
+        tags = "｜"
+        div = divs_[i]
+        tags_span = div.xpath('./span')
+        for tag_ in tags_span:
+            tag = tag_.text  # str
+            tags = tags + tag
+            tags = tags + "｜"
+        print("---" * 50)
+        if tags == " | ":
+            tags = "N\A"
+        # print(tags)
         welfare = welfares_[i].text_content()
         print("职位:", position)
         print("城市:", place_city)
         print("区域:", place_area)
         print("薪资:", salary)
-        print("标签:", tag)
+        print("标签:", tags)
         print("学历要求:", require_education)
         print("经验要求:", require_experience)
         print("企业名称:", company)
@@ -71,7 +82,7 @@ def parse(content):
         print("公司规模:", company_status_company_size)
         print("福利待遇:", welfare)
         print("--------------------")
-        job = LagouJob(position, place_city, place_area, salary, tag, require_education, require_experience,
+        job = LagouJob(position, place_city, place_area, salary, tags, require_education, require_experience,
                        company, company_status_industry, company_status_Financing_stage,
                        company_status_company_size, welfare)
         jobs.append(job)
