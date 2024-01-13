@@ -1,5 +1,25 @@
 # 5piderMan
 
+## Backend
+
+使用 [Poetry](https://python-poetry.org/) 作为包管理器。可以使用以下命令安装 Poetry 或者查阅[官方文档](https://python-poetry.org/docs/)：
+
+```bash
+pip install poetry
+```
+
+安装项目依赖：
+
+```bash
+poetry install
+```
+
+添加依赖：
+
+```bash
+poetry add packagename
+```
+
 ## Frontend
 
 前端技术栈： Vite + React + Antd + Tailwindcss + Echarts
