@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "backend"
+version = "0.1.0"
+description = ""
+authors = ["5piderMan-Team"]
+license = "GPL3"
+readme = "README.md"
+
+[tool.poetry.scripts]
+backend = "backend:main"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.109.0"
+sqlalchemy = "^2.0.25"
+dynaconf = "^3.2.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
