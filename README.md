@@ -29,6 +29,12 @@ poetry add packagename
 配置文件位于 `src/backend/config/` 中，`settings.toml` 用于一般配置，`.secrets.toml` 用于一些存储一些私密配置，例如数据库密码。
 同时私密配置也可配置在环境变量或者`.env`文件中。前缀为`5PIDERMAN`。
 
+### 项目启动
+```bash
+cd src/backend
+uvicorn main:app --reload
+```
+
 ## Frontend
 
 前端技术栈： Vite + React + Antd + Tailwindcss + Echarts
