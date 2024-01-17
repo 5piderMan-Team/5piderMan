@@ -30,9 +30,17 @@ poetry add packagename
 同时私密配置也可配置在环境变量或者`.env`文件中。前缀为`5PIDERMAN`。
 
 ### 项目启动
+
 ```bash
 cd src/backend
 uvicorn main:app --reload
+```
+
+或者：
+
+```bash
+poetry install
+backend
 ```
 
 ## Frontend
