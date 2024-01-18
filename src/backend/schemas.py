@@ -8,7 +8,7 @@ from pydantic import BaseModel, ConfigDict, StringConstraints
 
 class JobSchema(BaseModel):
     model_config = ConfigDict(from_attributes=True)
-    id: int
+
     position: Annotated[str, StringConstraints(max_length=128)]
     city: Annotated[str, StringConstraints(max_length=128)]
     area: Annotated[str, StringConstraints(max_length=128)]
