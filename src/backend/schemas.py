@@ -1,9 +1,5 @@
-from typing import List
-from sqlalchemy import Column, Integer, String
-from sqlalchemy.dialects.postgresql import ARRAY
-from sqlalchemy.orm import declarative_base
-from typing_extensions import Annotated
 from pydantic import BaseModel, ConfigDict, StringConstraints
+from typing_extensions import Annotated
 
 
 class JobSchema(BaseModel):

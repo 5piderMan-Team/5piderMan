@@ -1,5 +1,5 @@
-import pymysql
 import dynaconf
+import pymysql
 
 settings = dynaconf.Dynaconf(
     settings_files=".secrets.toml",  # 配置文件

@@ -1,12 +1,12 @@
 from pathlib import Path
-from .config import settings
-from fastapi import Depends, FastAPI, HTTPException
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import FileResponse
+
 import uvicorn
-from . import models, db, dao, schemas, routers
-from sqlalchemy.orm import Session
-from fastapi.responses import HTMLResponse
+from fastapi import FastAPI
+from fastapi.responses import FileResponse, HTMLResponse
+from fastapi.staticfiles import StaticFiles
+
+from . import db, models, routers
+from .config import settings
 
 app = FastAPI()
 app.include_router(routers.router, prefix="/api")

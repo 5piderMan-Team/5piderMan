@@ -1,4 +1,5 @@
 from pathlib import Path
+
 from dynaconf import Dynaconf
 
 configdir = Path(__file__).parent
