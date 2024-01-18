@@ -11,8 +11,17 @@ def get(session: Session, offset=0, limit=100) -> List[Job]:
     return result
 
 
-def count(session: Session, key: str) -> dict:
-    valid_keys = ["city"]
+def keyword_count(session: Session, keyword: str | None = '') -> int:
+    '''
+        for now only for position keyword count
+    '''
+    result = session.query(Job).filter(Job.position.like(f"%{keyword}%")).count()
+    print(f'{keyword} : {result}')
+    return result
+
+
+def group_count(session: Session, key: str) -> dict:
+    valid_keys = ["city", "education"]
     if key not in valid_keys:
         return {}
     group_by_column = getattr(Job, key)
