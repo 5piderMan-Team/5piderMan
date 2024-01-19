@@ -1,30 +1,30 @@
-import React from 'react';
-import {Layout, theme} from 'antd';
+import React from "react";
+import { Layout, theme } from "antd";
 
-const {Content} = Layout;
+const { Content } = Layout;
 import FooterWarp from "./components/FooterWarp";
 import Navbar from "./components/Navbar";
-import Charts from "./chart.jsx";
+import JobList from "./components/JobList/index.jsx";
 
 const ContentWarp = () => {
-    return (
-        <Content className="min-h-screen">
-            <Charts/>
-        </Content>
-    )
+  return (
+    <Content className="flex items-center justify-center">
+      <JobList className="w-3/5" />
+    </Content>
+  );
 };
 
 const App = () => {
-    const {
-        token: {colorBgContainer},
-    } = theme.useToken();
-    return (
-        <Layout className="layout">
-            <Navbar/>
-            <ContentWarp/>
-            <FooterWarp/>
-        </Layout>
-    );
+  const {
+    token: { colorBgContainer },
+  } = theme.useToken();
+  return (
+    <Layout className="layout">
+      <Navbar />
+      <ContentWarp />
+      <FooterWarp />
+    </Layout>
+  );
 };
 
 export default App;
