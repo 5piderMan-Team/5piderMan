@@ -5,6 +5,7 @@ description = ""
 authors = ["5piderMan-Team"]
 license = "GPL3"
 readme = "README.md"
+include = ["web/dist/**/*"]
 
 [tool.poetry.scripts]
 backend = "backend.main:main"

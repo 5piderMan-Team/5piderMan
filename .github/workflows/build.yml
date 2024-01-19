@@ -1,0 +1,32 @@
+name: Build
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    # env:
+    #   AAA: ${{ secrets.AAA }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Build Frontend 🏗️
+        run: |
+          cd web
+          yarn install
+          yarn build
+
+      - name: Build Backend 🏗️
+        run: |
+          pip install poetry
+          poetry install
+          poetry build
+
+      - name: Upload results 📤
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist/
+          if-no-files-found: error
