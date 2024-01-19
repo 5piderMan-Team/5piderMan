@@ -8,9 +8,13 @@ def get_jobs(session: Session):
 
 
 def group_and_count(session: Session, key: str):
-    if key == "position":
-        print("hehe")
-        lang = ["python", "java", "c++", "go", "ruby"]
-        return {item: dao.keyword_count(session, item) for item in lang}
-
+    if key not in ["city", "education"]:
+        return {}
     return dao.group_count(session, key)
+
+
+def get_filtered_position(session: Session, spec: str):
+    current_pos = ["python", "ruby", "java", "c++"]
+    if spec not in current_pos:
+        return []
+    return dao.filtered_select(session, spec)

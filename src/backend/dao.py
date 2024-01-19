@@ -11,15 +11,6 @@ def get(session: Session, offset=0, limit=100) -> List[Job]:
     return result
 
 
-def keyword_count(session: Session, keyword: str | None = '') -> int:
-    '''
-        for now only for position keyword count
-    '''
-    result = session.query(Job).filter(Job.position.like(f"%{keyword}%")).count()
-    print(f'{keyword} : {result}')
-    return result
-
-
 def group_count(session: Session, key: str) -> dict:
     valid_keys = ["city", "education"]
     if key not in valid_keys:
@@ -32,3 +23,8 @@ def group_count(session: Session, key: str) -> dict:
     )
     result = sorted(result, key=lambda x: x[1], reverse=True)
     return {item[0]: item[1] for item in result}
+
+
+def filtered_select(session: Session, exist: str) -> list[Job]:
+    result = session.query(Job).filter(Job.position.like(f"%{exist}%")).all()
+    return result
