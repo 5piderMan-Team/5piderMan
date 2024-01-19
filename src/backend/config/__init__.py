@@ -4,6 +4,7 @@ from dynaconf import Dynaconf
 
 configdir = Path(__file__).parent
 settings_files = [
+    Path.home() / ".config/backend/settings.toml",
     configdir / "settings.toml",
     configdir / ".secrets.toml",
 ]
