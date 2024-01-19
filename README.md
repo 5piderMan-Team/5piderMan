@@ -31,12 +31,12 @@ poetry add packagename
 
 ### 项目启动
 
-```bash
+<!-- ```bash
 cd src/backend
 uvicorn main:app --reload
 ```
 
-或者：
+或者： -->
 
 ```bash
 poetry install
