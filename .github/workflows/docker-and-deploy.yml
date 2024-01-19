@@ -60,12 +60,6 @@ jobs:
             docker rm backend
             docker run -d \
               -p 54321:8080 \
-              -e "5PIDERMAN_DB_HOST=$DB_HOST" \
-              -e "5PIDERMAN_DB_PORT=$DB_PORT" \
-              -e "5PIDERMAN_DB_USER=$DB_USER" \
-              -e "5PIDERMAN_DB_PASSWORD=$DB_PASSWORD" \
-              -e "5PIDERMAN_DB_NAME=$DB_NAME" \
-              -e "5PIDERMAN_DB_TYPE=$DB_TYPE" \
-              -e "5PIDERMAN_DB_API=$DB_API" \
+              -v /root/.config/backend:/root/.config/backend \
               --name backend \
               ghcr.io/5piderman-team/5piderman
