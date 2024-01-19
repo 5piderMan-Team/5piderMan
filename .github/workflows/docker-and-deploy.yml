@@ -1,0 +1,67 @@
+name: Publish Image And Deploy
+
+on:
+  push:
+    branches: ["docker"]
+
+jobs:
+  build-and-deploy:
+    env:
+      GITHUBNAME: ${{ github.actor }}
+      GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
+      DB_HOST: ${{ secrets.DB_HOST }}
+      DB_PORT: ${{ secrets.DB_PORT }}
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_NAME: ${{ secrets.DB_NAME }}
+      DB_TYPE: ${{ secrets.DB_TYPE }}
+      DB_API: ${{ secrets.DB_API }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUBTOKEN }}
+
+      - name: Build Frontend 🏗️
+        run: |
+          cd web
+          yarn install
+          yarn build
+
+      - name: Build Backend 🏗️
+        run: |
+          pip install poetry
+          poetry install
+          poetry build
+
+      - name: Build the  Docker image
+        run: |
+          docker build . --tag ghcr.io/5piderman-team/5piderman:latest 
+          docker push ghcr.io/5piderman-team/5piderman:latest
+
+      # - name: deploy
+      #   uses: appleboy/ssh-action@v1.0.3
+      #   with:
+      #     host: ${{ secrets.SERVER_HOST }}
+      #     username: ${{ secrets.SERVER_USER }}
+      #     password: ${{ secrets.SERVER_PWD }}
+      #     port: ${{ secrets.SERVER_PORT }}
+      #     script: |
+      #       docker stop backend
+      #       docker rm backend
+      #       docker login -u "$GITHUBNAME" -p "$GITHUBTOKEN" token https://ghcr.io
+      #       docker pull ghcr.io/5piderman-team/5piderman:latest
+      #       docker run -d \
+      #         -p 54321:8080 \
+      #         -e "5PIDERMAN_DB_HOST=$DB_HOST" \
+      #         -e "5PIDERMAN_DB_PORT=$DB_PORT" \
+      #         -e "5PIDERMAN_DB_USER=$DB_USER" \
+      #         -e "5PIDERMAN_DB_PASSWORD=$DB_PASSWORD" \
+      #         -e "5PIDERMAN_DB_NAME=$DB_NAME" \
+      #         -e "5PIDERMAN_DB_TYPE=$DB_TYPE" \
+      #         -e "5PIDERMAN_DB_API=$DB_API" \
+      #         --name backend \
+      #         ghcr.io/5piderman-team/5piderman

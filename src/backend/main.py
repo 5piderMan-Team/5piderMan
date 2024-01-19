@@ -1,3 +1,4 @@
+import logging
 from pathlib import Path
 
 import uvicorn
@@ -8,7 +9,11 @@ from fastapi.responses import FileResponse
 from . import db, models, routers
 from .config import settings
 
-STATICDIR = Path(__file__).parent.parent.parent.joinpath("web/dist")
+staticdir = Path(__file__).parent.parent.parent.joinpath("web/dist")
+# 目前采用 src 目录结构，导致打包时静态文件路径和开发时不一致，暂时先这样处理。
+if ~staticdir.exists():
+    staticdir = Path(__file__).parent.parent.joinpath("web/dist")
+
 app = FastAPI()
 
 app.add_middleware(
@@ -22,12 +27,12 @@ app.add_middleware(
 
 @app.middleware("http")
 async def add_static_filter(request: Request, call_next):
-    if request.url.path.startswith("/api"):
+    if request.url.path.startswith("/api") or request.url.path.startswith("/docs"):
         return await call_next(request)
     if request.url.path == "/":
-        return FileResponse(STATICDIR.joinpath("index.html"))
+        return FileResponse(staticdir.joinpath("index.html"))
 
-    return FileResponse(STATICDIR.joinpath("." + request.url.path))
+    return FileResponse(staticdir.joinpath("." + request.url.path))
 
 
 app.include_router(routers.router, prefix="/api")
