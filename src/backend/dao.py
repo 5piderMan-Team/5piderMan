@@ -2,7 +2,6 @@ from typing import List
 
 from sqlalchemy import func
 from sqlalchemy.orm import Session
-from sqlalchemy import func
 
 from .models import Job
 
@@ -26,6 +25,10 @@ def group_count(session: Session, key: str) -> dict:
     return {item[0]: item[1] for item in result}
 
 
-def filtered_select(session: Session, exist: str) -> list[Job]:
-    result = session.query(Job).filter(Job.position.like(f"%{exist}%")).all()
+# select : exist in the target column
+def existed_select(
+    session: Session, field: str = "city", exist: str = "成都"
+) -> list[Job]:
+    tar_attr = getattr(Job, field)
+    result = session.query(Job).filter(tar_attr.like(f"%{exist}%")).all()
     return result
