@@ -18,8 +18,8 @@ router = APIRouter()
 
 
 @router.get("/jobs", response_model=list[schemas.JobSchema])
-def get_jobs(session: Session = Depends(get_session)):
-    return services.get_jobs(session)
+def get_jobs(city: str | None = "全国", session: Session = Depends(get_session)):
+    return services.get_jobs(city, session)
 
 
 @router.get("/analyze/{item}", response_class=JSONResponse)
