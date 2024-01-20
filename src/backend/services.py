@@ -4,14 +4,12 @@ from . import dao
 
 
 def get_jobs(city_limit: str | None, session: Session):
-    if city_limit == "全国":
+    if city_limit == "全国" or city_limit is None:
         return dao.get(session)
     return dao.existed_select(session, "city", city_limit)
 
 
 def group_and_count(session: Session, key: str):
-    if key not in ["city", "education"]:
-        return {}
     return dao.group_count(session, key)
 
 

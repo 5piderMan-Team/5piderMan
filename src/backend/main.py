@@ -26,8 +26,13 @@ app.add_middleware(
 
 @app.middleware("http")
 async def add_static_filter(request: Request, call_next):
-    if request.url.path.startswith("/api") or request.url.path.startswith("/docs"):
+    if (
+        request.url.path.startswith("/api")
+        or request.url.path.startswith("/docs")
+        or request.url.path == "/openapi.json"
+    ):
         return await call_next(request)
+
     if request.url.path == "/":
         return FileResponse(staticdir.joinpath("index.html"))
 

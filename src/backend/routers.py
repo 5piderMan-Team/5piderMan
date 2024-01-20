@@ -1,5 +1,4 @@
 from fastapi import APIRouter, Depends
-from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 
 from . import db, schemas, services
@@ -17,14 +16,18 @@ def get_session():
 router = APIRouter()
 
 
-@router.get("/jobs", response_model=list[schemas.JobSchema])
-def get_jobs(city: str | None = "全国", session: Session = Depends(get_session)):
+@router.get("/jobs/", response_model=list[schemas.JobSchema])
+def get_jobs(city: str | None, session: Session = Depends(get_session)):
     return services.get_jobs(city, session)
 
 
-@router.get("/analyze/{item}", response_class=JSONResponse)
+@router.get("/analyze/{item}", response_model=dict[str, int])
 def get_analyze(item: str, session: Session = Depends(get_session)):
-    return services.group_and_count(session, item)
+    match item:
+        case "city" | "education":
+            return services.group_and_count(session, item)
+        case _:
+            return {"error": 404}
 
 
 @router.get("/position/{spec}", response_model=list[schemas.SimpleJobSchema])
