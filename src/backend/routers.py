@@ -16,7 +16,7 @@ def get_session():
 router = APIRouter()
 
 
-@router.get("/jobs/", response_model=list[schemas.JobSchema])
+@router.get("/jobs", response_model=list[schemas.JobSchema])
 def get_jobs(city: str | None = None, session: Session = Depends(get_session)):
     return services.get_jobs(city, session)
 
