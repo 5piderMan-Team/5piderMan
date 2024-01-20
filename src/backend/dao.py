@@ -2,6 +2,7 @@ from typing import List
 
 from sqlalchemy import func
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 
 from .models import Job
 
