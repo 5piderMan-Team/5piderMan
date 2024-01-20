@@ -5,17 +5,10 @@ on:
     branches: ["main"]
 
 jobs:
-  build-and-deploy:
+  build-and-publish:
     env:
       GITHUBNAME: selflocking
       GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
-      DB_HOST: ${{ secrets.DB_HOST }}
-      DB_PORT: ${{ secrets.DB_PORT }}
-      DB_USER: ${{ secrets.DB_USER }}
-      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      DB_NAME: ${{ secrets.DB_NAME }}
-      DB_TYPE: ${{ secrets.DB_TYPE }}
-      DB_API: ${{ secrets.DB_API }}
 
     runs-on: ubuntu-latest
     steps:
@@ -46,6 +39,14 @@ jobs:
           docker build . --tag ghcr.io/5piderman-team/5piderman:latest 
           docker push ghcr.io/5piderman-team/5piderman:latest
 
+  deploy:
+    needs: build-and-publish
+    env:
+      GITHUBNAME: selflocking
+      GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
+
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy 🚀
         uses: appleboy/ssh-action@v1.0.3
         with:
