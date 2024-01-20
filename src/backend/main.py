@@ -1,4 +1,3 @@
-import logging
 from pathlib import Path
 
 import uvicorn
@@ -11,7 +10,7 @@ from .config import settings
 
 staticdir = Path(__file__).parent.parent.parent.joinpath("web/dist")
 # 目前采用 src 目录结构，导致打包时静态文件路径和开发时不一致，暂时先这样处理。
-if ~staticdir.exists():
+if not staticdir.exists():
     staticdir = Path(__file__).parent.parent.joinpath("web/dist")
 
 app = FastAPI()

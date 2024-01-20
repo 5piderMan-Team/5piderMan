@@ -1,5 +1,4 @@
-import React from "react";
-import { Layout, theme } from "antd";
+import { Layout } from "antd";
 
 const { Content } = Layout;
 import FooterWarp from "./components/FooterWarp";
@@ -9,15 +8,15 @@ import JobList from "./components/JobList/index.jsx";
 const ContentWarp = () => {
   return (
     <Content className="flex items-center justify-center">
-      <JobList className="w-3/5" />
+      <JobList />
     </Content>
   );
 };
 
 const App = () => {
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
+  // const {
+  //   token: { colorBgContainer },
+  // } = theme.useToken();
   return (
     <Layout className="layout">
       <Navbar />
