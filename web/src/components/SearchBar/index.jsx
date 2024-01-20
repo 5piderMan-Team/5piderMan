@@ -4,6 +4,6 @@ const { Search } = Input;
 
 const onSearch = (value, _e, info) => console.log(info?.source, value);
 
-export default function SearchBar() {
-  return <Search placeholder="输入以搜索岗位" onSearch={onSearch} />;
+export default function SearchBar(prop) {
+  return <Search placeholder="输入以搜索岗位" onSearch={onSearch} {...prop} />;
 }

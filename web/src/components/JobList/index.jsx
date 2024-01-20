@@ -1,28 +1,34 @@
 import React from "react";
 import * as api from "../../backend/job";
 import { Select, Table } from "antd";
-import { Flex, Radio } from "antd";
+import { Flex, Radio, Spin } from "antd";
 
 const columns = [
   {
     title: "岗位",
     dataIndex: "position",
     key: "position",
+    width: "40%",
+    ellipsis: true,
   },
   {
     title: "城市",
     dataIndex: "city",
     key: "city",
+    width: "10%",
   },
   {
     title: "公司",
     dataIndex: "company_name",
     key: "company_name",
+    width: "40%",
+    ellipsis: true,
   },
   {
     title: "薪水",
     dataIndex: "salary",
     key: "salary",
+    width: "10%",
   },
 ];
 
@@ -71,8 +77,10 @@ const cityList = [
 export default function JobList(prop) {
   const [dataSource, setDataSource] = React.useState([]);
   const [city, setCity] = React.useState("全国");
+  const [spinning, setSpinning] = React.useState(true);
 
   React.useEffect(() => {
+    setSpinning(true);
     api.getJobs(city).then((data) => {
       let counter = 1;
       data.map((item) => {
@@ -80,6 +88,7 @@ export default function JobList(prop) {
         return item;
       });
       setDataSource(data);
+      setSpinning(false);
     });
   }, [city]);
 
@@ -129,12 +138,14 @@ export default function JobList(prop) {
           </div>
         </div>
 
-        <Table
-          className=" mt-4 w-full"
-          dataSource={dataSource}
-          columns={columns}
-          {...prop}
-        />
+        <Spin wrapperClassName=" w-full" tip="Loading..." spinning={spinning}>
+          <Table
+            className="mt-4"
+            dataSource={dataSource}
+            columns={columns}
+            {...prop}
+          />
+        </Spin>
       </Flex>
     </>
   );

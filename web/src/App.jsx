@@ -1,17 +1,9 @@
 import { Layout } from "antd";
 
-const { Content } = Layout;
 import FooterWarp from "./components/FooterWarp";
 import Navbar from "./components/Navbar";
-import JobList from "./components/JobList/index.jsx";
-
-const ContentWarp = () => {
-  return (
-    <Content className="flex items-center justify-center">
-      <JobList />
-    </Content>
-  );
-};
+import router from "./router";
+import { RouterProvider } from "react-router-dom";
 
 const App = () => {
   // const {
@@ -20,7 +12,7 @@ const App = () => {
   return (
     <Layout className="layout">
       <Navbar />
-      <ContentWarp />
+      <RouterProvider router={router} />
       <FooterWarp />
     </Layout>
   );
