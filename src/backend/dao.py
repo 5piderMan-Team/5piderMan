@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from .models import Job
 
 
-def get(session: Session, offset=0, limit=100) -> List[Job]:
+def get(session: Session, offset=0, limit=500) -> List[Job]:
     result = session.query(Job).offset(offset).limit(limit).all()
     return result
 
@@ -27,8 +27,9 @@ def group_count(session: Session, key: str) -> dict:
 
 # select : exist in the target column
 def existed_select(
-    session: Session, field: str = "city", exist: str = "成都"
+    session: Session, field: str = "city", exist: str = "成都",
+    offset=0, limit=500
 ) -> list[Job]:
     tar_attr = getattr(Job, field)
-    result = session.query(Job).filter(tar_attr.like(f"%{exist}%")).all()
+    result = session.query(Job).filter(tar_attr.like(f"%{exist}%")).offset(offset).limit(500).all()
     return result
