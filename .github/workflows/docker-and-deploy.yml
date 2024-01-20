@@ -1,0 +1,65 @@
+name: Publish Image And Deploy
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build-and-deploy:
+    env:
+      GITHUBNAME: selflocking
+      GITHUBTOKEN: ${{ secrets.GITHUBTOKEN }}
+      DB_HOST: ${{ secrets.DB_HOST }}
+      DB_PORT: ${{ secrets.DB_PORT }}
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_NAME: ${{ secrets.DB_NAME }}
+      DB_TYPE: ${{ secrets.DB_TYPE }}
+      DB_API: ${{ secrets.DB_API }}
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Login to GitHub Container Registry 📦
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: selflocking
+          password: ${{ secrets.GITHUBTOKEN }}
+
+      - name: Build Frontend 🏗️
+        run: |
+          cd web
+          yarn install
+          yarn build
+
+      - name: Build Backend 🏗️
+        run: |
+          pip install poetry
+          poetry install
+          poetry build
+
+      - name: Build the Docker image 🐳
+        run: |
+          docker build . --tag ghcr.io/5piderman-team/5piderman:latest 
+          docker push ghcr.io/5piderman-team/5piderman:latest
+
+      - name: Deploy 🚀
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          password: ${{ secrets.SERVER_PWD }}
+          port: ${{ secrets.SERVER_PORT }}
+          script: |
+            docker login ghcr.io -u "$GITHUBNAME" -p "$GITHUBTOKEN"
+            docker pull ghcr.io/5piderman-team/5piderman:latest
+            docker stop backend
+            docker rm backend
+            docker run -d \
+              -p 54321:8080 \
+              -v /root/.config/backend:/root/.config/backend \
+              --name backend \
+              ghcr.io/5piderman-team/5piderman

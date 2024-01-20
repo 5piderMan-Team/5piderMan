@@ -23,10 +23,10 @@ def get_jobs(session: Session = Depends(get_session)):
 
 
 @router.get("/analyze/{item}", response_class=JSONResponse)
-def get_analyze(session: Session = Depends(get_session), item: str | None = None):
+def get_analyze(item: str, session: Session = Depends(get_session)):
     return services.group_and_count(session, item)
 
 
-@router.get("/position/{spec}",response_model=list[schemas.SimpleJobSchema])
+@router.get("/position/{spec}", response_model=list[schemas.SimpleJobSchema])
 def get_certain_position(session: Session = Depends(get_session), spec: str = "python"):
     return services.get_filtered_position(session, spec)
