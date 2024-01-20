@@ -32,7 +32,7 @@ def match_field(field: str) -> Column[str]:
             return Job.city
 
 
-def get(session: Session, offset=0, limit=500) -> List[Job]:
+def get(session: Session, offset=0, limit=100) -> List[Job]:
     result = session.query(Job).offset(offset).limit(limit).all()
     return result
 

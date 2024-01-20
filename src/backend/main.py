@@ -26,17 +26,25 @@ app.add_middleware(
 
 @app.middleware("http")
 async def add_static_filter(request: Request, call_next):
+    urlpath = request.url.path
+    # 如果是 fastapi 相关的路由，直接返回
     if (
-        request.url.path.startswith("/api")
-        or request.url.path.startswith("/docs")
-        or request.url.path == "/openapi.json"
+        urlpath.startswith("/api")
+        or urlpath.startswith("/docs")
+        or urlpath == "/openapi.json"
     ):
         return await call_next(request)
 
-    if request.url.path == "/":
+    # 如果访问首页，返回 index.html
+    if urlpath == "/":
         return FileResponse(staticdir.joinpath("index.html"))
 
-    return FileResponse(staticdir.joinpath("." + request.url.path))
+    # 如果访问静态资源，返回静态资源
+    if urlpath.startswith("/assets") or urlpath == "/vite.svg":
+        return FileResponse(staticdir.joinpath("." + urlpath))
+
+    # 其他情况，例如前端路由，返回 index.html
+    return FileResponse(staticdir.joinpath("index.html"))
 
 
 app.include_router(routers.router, prefix="/api")
