@@ -13,13 +13,6 @@ def group_and_count(session: Session, key: str):
     return dao.group_count(session, key)
 
 
-def get_filtered_position(session: Session, spec: str):
-    current_pos = ["python", "ruby", "java", "c++"]
-    if spec not in current_pos:
-        return []
-    return dao.existed_select(session, "position", spec)
-
-
 def get_count_by_list(session: Session, pattern: list[str]) -> dict[str, int]:
     result = []
     for p in pattern:
@@ -118,3 +111,15 @@ def get_language_analysis(session: Session) -> dict[str, int]:
         "Scala",
     ]
     return get_count_by_list(session, language)
+
+
+def get_salary_analysis(session: Session):
+    salary_data = dao.group_count(session, "salary")
+    histogram = dict()
+    for k, v in salary_data.items():
+        index = int(k.replace("k", "").split("-")[0])
+        if index not in histogram.keys():
+            histogram[index] = v
+        else:
+            histogram[index] += v
+    return {str(k) + "k": v for k, v in histogram.items()}
