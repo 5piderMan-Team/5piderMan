@@ -9,10 +9,6 @@ def get_jobs(city_limit: str | None, session: Session):
     return dao.existed_select(session, "city", city_limit)
 
 
-def group_and_count(session: Session, key: str):
-    return dao.group_count(session, key)
-
-
 def get_count_by_list(session: Session, pattern: list[str]) -> dict[str, int]:
     result = []
     for p in pattern:
@@ -20,6 +16,14 @@ def get_count_by_list(session: Session, pattern: list[str]) -> dict[str, int]:
 
     result = sorted(result, key=lambda x: x[1], reverse=True)
     return dict(result)
+
+
+def get_city_analysis(session: Session) -> dict[str, int]:
+    return dao.group_count(session, "city")
+
+
+def get_education_analysis(session: Session) -> dict[str, int]:
+    return dao.group_count(session, "education")
 
 
 def get_position_analysis(session: Session) -> dict[str, int]:

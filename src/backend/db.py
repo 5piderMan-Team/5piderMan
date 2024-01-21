@@ -8,7 +8,10 @@ db_url = f"{settings.db_type}+{settings.db_api}://{settings.db_user}:{settings.d
 
 engine = create_engine(
     url=db_url,
-    echo=True,
+    pool_pre_ping=True,
+    pool_size=0,
+    pool_recycle=3600,
+    echo=False,
 )
 
 session_factory = sessionmaker(bind=engine, autoflush=False, expire_on_commit=True)

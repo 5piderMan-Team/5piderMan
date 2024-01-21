@@ -40,7 +40,7 @@ def get(session: Session, offset=0, limit=100) -> List[Job]:
 
 
 def group_count(session: Session, key: str) -> dict[str, int]:
-    valid_keys = ["city", "education",'salary']
+    valid_keys = ["city", "education", "salary"]
     if key not in valid_keys:
         return {}
     group_by_column = match_field(key)
