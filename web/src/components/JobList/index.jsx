@@ -74,6 +74,19 @@ const cityList = [
   "湖州",
 ];
 
+// 主要用于获取屏幕宽度
+const useViewport = () => {
+  const [width, setWidth] = React.useState(window.innerWidth);
+
+  React.useEffect(() => {
+    const handleWindowResize = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", handleWindowResize);
+    return () => window.removeEventListener("resize", handleWindowResize);
+  }, []);
+
+  return { width };
+};
+
 export default function JobList(prop) {
   const [dataSource, setDataSource] = React.useState([]);
   const [city, setCity] = React.useState("全国");
@@ -102,7 +115,9 @@ export default function JobList(prop) {
     setCity(e);
   };
 
-  const citySpilt = 11;
+  // 根据屏幕宽度，动态调整城市列表的显示
+  const { width } = useViewport();
+  const citySpilt = width / 100 - 2;
   const minCityList = cityList.slice(0, citySpilt);
   const lastCityList = cityList.slice(citySpilt);
 
