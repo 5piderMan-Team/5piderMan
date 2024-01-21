@@ -30,12 +30,7 @@ async def get_analyze(item: str, session: Session = Depends(get_session)):
             return services.get_position_analysis(session)
         case "language":
             return services.get_language_analysis(session)
+        case "salary":
+            return services.get_salary_analysis(session)
         case _:
             return {"error": 404}
-
-
-@router.get("/position/{spec}", response_model=list[schemas.SimpleJobSchema])
-async def get_certain_position(
-    session: Session = Depends(get_session), spec: str = "python"
-):
-    return services.get_filtered_position(session, spec)
