@@ -4,10 +4,10 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 
 from .config import settings
 
-database_url = f"{settings.db_type}+{settings.db_api}://{settings.db_user}:{settings.db_password}@{settings.db_host}:{settings.db_port}/{settings.db_name}"
+db_url = f"{settings.db_type}+{settings.db_api}://{settings.db_user}:{settings.db_password}@{settings.db_host}:{settings.db_port}/{settings.db_name}"
 
 engine = create_engine(
-    url=database_url,
+    url=db_url,
     echo=True,
 )
 

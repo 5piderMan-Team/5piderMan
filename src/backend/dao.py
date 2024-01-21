@@ -66,3 +66,9 @@ def existed_select(
         .all()
     )
     return result
+
+
+def filter_count(session: Session, field: str, exist: str) -> int:
+    tar_attr = match_field(field)
+    result = session.query(Job).filter(tar_attr.like(f"%{exist}%")).count()
+    return result

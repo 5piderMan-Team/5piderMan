@@ -13,4 +13,34 @@ const getJobs = (city) => {
   });
 };
 
-export { getJobs };
+const getCitiesAnalyze = () => {
+  return axios.get(serverUrl + "/api/analyze/city").then((response) => {
+    return response.data;
+  });
+};
+
+const getEducationAnalyze = () => {
+  return axios.get(serverUrl + "/api/analyze/education").then((response) => {
+    return response.data;
+  });
+};
+
+const getPositionbAnalyze = () => {
+  return axios.get(serverUrl + "/api/analyze/position").then((response) => {
+    return response.data;
+  });
+};
+
+const getLanguagesAnalyze = () => {
+  return axios.get(serverUrl + "/api/analyze/language").then((response) => {
+    return response.data;
+  });
+};
+
+export {
+  getJobs,
+  getCitiesAnalyze,
+  getEducationAnalyze,
+  getPositionbAnalyze,
+  getLanguagesAnalyze,
+};
