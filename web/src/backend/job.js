@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const serverUrl = "";
+const serverUrl =
+  import.meta.env.MODE == "development" ? "http://0.0.0.0:8080" : "";
 
 const getJobs = (city) => {
   let url = serverUrl + "/api/jobs";
