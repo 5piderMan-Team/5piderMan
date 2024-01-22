@@ -29,6 +29,8 @@ def match_field(field: str) -> Column[str]:
             return Job.welfare
         case "salary":
             return Job.salary
+        case "category":
+            return Job.category
         case _:
             logging.error("Invalid field name")
             return Job.city
@@ -40,7 +42,14 @@ def get(session: Session, offset=0, limit=100) -> List[Job]:
 
 
 def group_count(session: Session, key: str) -> dict[str, int]:
-    valid_keys = ["city", "education", "salary"]
+    valid_keys = [
+        "city",
+        "education",
+        "salary",
+        "category",
+        "company_name",
+        "experience",
+    ]
     if key not in valid_keys:
         return {}
     group_by_column = match_field(key)

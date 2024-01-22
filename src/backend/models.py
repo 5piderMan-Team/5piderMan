@@ -19,3 +19,4 @@ class Job(Base):
     financing_stage = Column(String(128))
     company_size = Column(String(128))
     welfare = Column(String(128))
+    category = Column(String(128))
