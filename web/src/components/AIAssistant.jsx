@@ -54,6 +54,33 @@ const ShowMessages = ({ messages, thinking = false }) => {
   );
 };
 
+/*
+{
+  "output": "正在为您跳转到Python搜索页面",
+  "type": "search",
+  "content": "Python"
+}
+*/
+const handleGPTFunctionCall = (res) => {
+  console.log(res);
+  if (res.type === null) {
+    return res.output;
+  }
+
+  switch (res.type) {
+    case "search":
+      new Promise((resolve, reject) => {
+        setTimeout(() => {
+          window.location.href = `/search?keyword=${res.content}`;
+          resolve();
+        }, 1000);
+      });
+      return "正在为您跳转到Python搜索页面";
+    default:
+      return "未知操作： " + res.type + " " + res.content;
+  }
+};
+
 const AIAssistant = () => {
   const [visible, setVisible] = useState(false);
   const [messages, setMessages] = useSessionStorageState("messages", {
@@ -66,11 +93,18 @@ const AIAssistant = () => {
   useEffect(() => {
     if (!canSand) {
       setInput("");
-      Api.getGPTRespond(input).then((res) => {
-        setMessages([...messages, { type: "ai", content: res, key: current }]);
-        inc();
-        setCanSand(true);
-      });
+      Api.getGPTRespond(input)
+        .then((res) => {
+          return handleGPTFunctionCall(res);
+        })
+        .then((res) => {
+          setMessages([
+            ...messages,
+            { type: "ai", content: res, key: current },
+          ]);
+          inc();
+          setCanSand(true);
+        });
     }
   }, [canSand]);
 

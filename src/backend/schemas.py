@@ -40,3 +40,9 @@ class SimpleJobSchema(BaseModel):
 
 class GPT_Input(BaseModel):
     input: str
+
+
+class GPT_Output(BaseModel):
+    output: str
+    type: str | None = None
+    content: str | None = None

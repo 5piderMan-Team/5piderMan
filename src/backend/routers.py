@@ -85,7 +85,7 @@ async def get_analyze(item: str, session: Session = Depends(get_session)):
             return {"error": 404}
 
 
-@router.post("/gpt", response_model=str)
+@router.post("/gpt", response_model=schemas.GPT_Output)
 async def gpt(request: schemas.GPT_Input):
     logger.warn(request)
     return services.gpt(request.input)

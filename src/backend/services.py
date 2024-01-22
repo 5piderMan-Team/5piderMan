@@ -1,6 +1,8 @@
+import json
+import logging
 from sqlalchemy.orm import Session
 
-from . import dao, ai
+from . import dao, ai, schemas
 
 
 def get_jobs(city_limit: str | None, session: Session):
@@ -178,4 +180,23 @@ def job_search(keyword: str, session: Session):
 
 
 def gpt(input: str):
-    return ai.gpt(input)
+    message = ai.gpt(input)
+    if message.content is not None:
+        logging.warn(message.content)
+        return schemas.GPT_Output(output=message.content)
+    if message.tool_calls is not None:
+        # 反序列化函数参数
+        argument = json.decoder.JSONDecoder().decode(
+            message.tool_calls[0].function.arguments
+        )
+        # 根据函数名进行相应的处理
+        match message.tool_calls[0].function.name:
+            case "go_to_search":
+                keyword = argument.get("keyword", "")
+                return schemas.GPT_Output(
+                    output=f"正在为您跳转到{keyword}搜索页面",
+                    type="search",
+                    content=keyword,
+                )
+            case _:
+                return "错误，未知的工具调用"
