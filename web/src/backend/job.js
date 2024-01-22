@@ -13,6 +13,14 @@ const getJobs = (city) => {
   });
 };
 
+const searchJobs = (search) => {
+  return axios
+    .get(serverUrl + "/api/jobs/search?keyword=" + search)
+    .then((response) => {
+      return response.data;
+    });
+};
+
 const getCitiesAnalyze = () => {
   return axios.get(serverUrl + "/api/analyze/city").then((response) => {
     return response.data;
@@ -43,4 +51,5 @@ export {
   getEducationAnalyze,
   getPositionbAnalyze,
   getLanguagesAnalyze,
+  searchJobs,
 };

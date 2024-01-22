@@ -14,13 +14,21 @@ const items = [
     title: "数据分析",
     label: <a href="/analyze">数据分析</a>,
   },
+  {
+    key: "search",
+    title: "搜索",
+    label: <a href="/search">搜索</a>,
+  },
 ];
 
 export default function Navbar() {
+  const onSearch = (value) => {
+    window.location.href = `/search?keyword=${value}`;
+  };
   return (
     <Header className=" flex justify-between items-center bg-gray-800">
       <div className="flex w-1/2 items-center">
-        <div className="text-white text-xl">5piderMan</div>
+        <div className="text-white text-xl mr-4">5piderMan</div>
         <Menu
           className="bg-transparent w-96"
           theme="dark"
@@ -29,7 +37,7 @@ export default function Navbar() {
         />
       </div>
       <div className="flex w-1/2 items-center justify-end">
-        <SearchBar className="w-fit" />
+        <SearchBar className="w-fit" onSearch={onSearch} />
       </div>
     </Header>
   );

@@ -4,6 +4,7 @@ import { PieChart } from "echarts/charts";
 import { LabelLayout } from "echarts/features";
 import { CanvasRenderer } from "echarts/renderers";
 import EChartsReactCore from "echarts-for-react/lib/core";
+import PropTypes from "prop-types";
 
 echarts.use([
   TitleComponent,
@@ -77,3 +78,9 @@ export default function NightingaleChart({
     />
   );
 }
+
+NightingaleChart.propTypes = {
+  items: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
+  onChartReady: PropTypes.func.isRequired,
+};

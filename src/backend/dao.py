@@ -74,3 +74,10 @@ def filter_count(session: Session, field: str, exist: str) -> int:
     tar_attr = match_field(field)
     result = session.query(Job).filter(tar_attr.like(f"%{exist}%")).count()
     return result
+
+
+def search(session: Session, keyword: str):
+    result = (
+        session.query(Job).filter(Job.position.like(f"%{keyword}%")).limit(100).all()
+    )
+    return result

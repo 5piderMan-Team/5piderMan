@@ -41,6 +41,11 @@ async def get_jobs(city: str | None = None, session: Session = Depends(get_sessi
     return services.get_jobs(city, session)
 
 
+@router.get("/jobs/search", response_model=list[schemas.JobSchema])
+async def get_jobs_search(keyword: str, session: Session = Depends(get_session)):
+    return services.job_search(keyword, session)
+
+
 city_cached = cache(services.get_city_analysis)
 education_cached = cache(services.get_education_analysis)
 position_cached = cache(services.get_position_analysis)

@@ -7,6 +7,7 @@ import {
 import { BarChart } from "echarts/charts";
 import { CanvasRenderer } from "echarts/renderers";
 import EChartsReactCore from "echarts-for-react/lib/core";
+import PropsTypes from "prop-types";
 
 echarts.use([
   TitleComponent,
@@ -127,3 +128,9 @@ export default function BarChartComponent({
     />
   );
 }
+
+BarChartComponent.propTypes = {
+  dataAxis: PropsTypes.array,
+  data: PropsTypes.array,
+  onChartReady: PropsTypes.func,
+};

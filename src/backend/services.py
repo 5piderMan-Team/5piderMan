@@ -127,3 +127,7 @@ def get_salary_analysis(session: Session):
         else:
             histogram[index] += v
     return {str(k) + "k": v for k, v in histogram.items()}
+
+
+def job_search(keyword: str, session: Session):
+    return dao.search(session, keyword)

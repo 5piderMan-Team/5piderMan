@@ -8,6 +8,7 @@ import * as Api from "../backend/job.js";
 import DoughnutChart from "../components/Charts/DoughnutChart.jsx";
 import NightingaleChart from "../components/Charts/NightingaleChart.jsx";
 import ScrollablePieChart from "../components/Charts/ScrollablePieChart.jsx";
+import PropTypes from "prop-types";
 
 function CityAnalyze() {
   const [cities, setCities] = useState([]);
@@ -144,6 +145,11 @@ function ChartDiv({ title, children }) {
     </div>
   );
 }
+
+ChartDiv.propTypes = {
+  title: PropTypes.string,
+  children: PropTypes.element,
+};
 
 function Analyze() {
   return (

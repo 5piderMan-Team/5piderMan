@@ -4,6 +4,7 @@ import { PieChart } from "echarts/charts";
 import { LabelLayout } from "echarts/features";
 import { CanvasRenderer } from "echarts/renderers";
 import EChartsReactCore from "echarts-for-react/lib/core";
+import PropTypes from "prop-types";
 
 echarts.use([
   TooltipComponent,
@@ -80,3 +81,9 @@ export default function DoughnutChart({ items, data, onChartReady, ...props }) {
     />
   );
 }
+
+DoughnutChart.propTypes = {
+  items: PropTypes.array,
+  data: PropTypes.array,
+  onChartReady: PropTypes.func,
+};

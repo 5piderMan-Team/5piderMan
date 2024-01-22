@@ -1,9 +1,12 @@
 import { Input } from "antd";
 
 const { Search } = Input;
+import PropTypes from "prop-types";
 
-const onSearch = (value, _e, info) => console.log(info?.source, value);
-
-export default function SearchBar(prop) {
+export default function SearchBar({ onSearch, ...prop }) {
   return <Search placeholder="输入以搜索岗位" onSearch={onSearch} {...prop} />;
 }
+
+SearchBar.propTypes = {
+  onSearch: PropTypes.func,
+};
