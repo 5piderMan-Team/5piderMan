@@ -69,6 +69,14 @@ const getCategoryAnalyze = () => {
   });
 };
 
+const getGPTRespond = (question) => {
+  return axios
+    .post(serverUrl + "/api/gpt", { input: question })
+    .then((response) => {
+      return response.data;
+    });
+};
+
 export {
   getJobs,
   getCitiesAnalyze,
@@ -80,4 +88,5 @@ export {
   getExperienceAnalyze,
   getCompanyAnalyze,
   getCategoryAnalyze,
+  getGPTRespond,
 };

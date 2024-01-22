@@ -32,7 +32,7 @@ export default function BasicPieChart({ items, data, onChartReady, ...props }) {
     return <div className="h-64"></div>;
   }
 
-  console.log(items);
+  // console.log(items);
   let option = optionSample;
   const chartdata = [];
   for (let i = 0; i < items.length; i++) {

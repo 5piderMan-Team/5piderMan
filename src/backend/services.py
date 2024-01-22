@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from . import dao
+from . import dao, ai
 
 
 def get_jobs(city_limit: str | None, session: Session):
@@ -175,3 +175,7 @@ def get_experience_analysis(session: Session):
 
 def job_search(keyword: str, session: Session):
     return dao.search(session, keyword)
+
+
+def gpt(input: str):
+    return ai.gpt(input)

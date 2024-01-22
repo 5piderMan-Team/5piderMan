@@ -112,7 +112,7 @@ export default function BarChartComponent({
       onChartReady={onChartReady}
       onEvents={{
         click: (params) => {
-          console.log(dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)]);
+          // console.log(dataAxis[Math.max(params.dataIndex - zoomSize / 2, 0)]);
           const echarts = echartRef.getEchartsInstance();
           echarts.dispatchAction({
             type: "dataZoom",

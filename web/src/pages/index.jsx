@@ -5,7 +5,7 @@ import JobList from "../components/JobList/index.jsx";
 
 const Index = () => {
   return (
-    <Content className="flex items-center justify-center">
+    <Content className="min-h-screen flex justify-center">
       <JobList />
     </Content>
   );

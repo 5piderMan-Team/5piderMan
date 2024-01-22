@@ -279,7 +279,7 @@ ChartDiv.propTypes = {
 
 function Analyze() {
   return (
-    <Content className="min-h-screen m-8">
+    <Content className="min-h-screen mt-16 mb-16 ml-32 mr-32">
       <Row className="">
         <Col span={12}>
           <ChartDiv title="城市分布">

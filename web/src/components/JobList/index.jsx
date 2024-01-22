@@ -106,12 +106,12 @@ export default function JobList(prop) {
   }, [city]);
 
   const handleCityChange = (e) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setCity(e.target.value);
   };
 
   const handleCitySelect = (e) => {
-    console.log(e);
+    // console.log(e);
     setCity(e);
   };
 
@@ -122,46 +122,40 @@ export default function JobList(prop) {
   const lastCityList = cityList.slice(citySpilt);
 
   return (
-    <>
-      <Flex vertical className=" w-3/5 items-center mt-16 mb-16">
-        <div className="flex w-full items-center justify-between">
-          <div className=" text-sm font-bold mr-4">工作地点</div>
-          <div>
-            <Radio.Group value={city} defaultValue="全国">
-              {minCityList.map((item) => (
-                <Radio.Button
-                  value={item}
-                  key={item}
-                  onChange={handleCityChange}
-                >
-                  {item}
-                </Radio.Button>
-              ))}
-            </Radio.Group>
-            <Select
-              className=" w-18"
-              placeholder="更多"
-              placement={city}
-              onChange={handleCitySelect}
-            >
-              {lastCityList.map((item) => (
-                <Select.Option value={item} key={item}>
-                  {item}
-                </Select.Option>
-              ))}
-            </Select>
-          </div>
+    <Flex vertical className=" w-3/5 items-center mt-16 mb-16">
+      <div className="flex w-full items-center justify-between">
+        <div className=" text-sm font-bold mr-4">工作地点</div>
+        <div>
+          <Radio.Group value={city} defaultValue="全国">
+            {minCityList.map((item) => (
+              <Radio.Button value={item} key={item} onChange={handleCityChange}>
+                {item}
+              </Radio.Button>
+            ))}
+          </Radio.Group>
+          <Select
+            className=" w-18"
+            placeholder="更多"
+            placement={city}
+            onChange={handleCitySelect}
+          >
+            {lastCityList.map((item) => (
+              <Select.Option value={item} key={item}>
+                {item}
+              </Select.Option>
+            ))}
+          </Select>
         </div>
+      </div>
 
-        <Spin wrapperClassName=" w-full" tip="Loading..." spinning={spinning}>
-          <Table
-            className="mt-4"
-            dataSource={dataSource}
-            columns={columns}
-            {...prop}
-          />
-        </Spin>
-      </Flex>
-    </>
+      <Spin wrapperClassName=" w-full" tip="Loading..." spinning={spinning}>
+        <Table
+          className="mt-4"
+          dataSource={dataSource}
+          columns={columns}
+          {...prop}
+        />
+      </Spin>
+    </Flex>
   );
 }

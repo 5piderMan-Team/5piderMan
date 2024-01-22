@@ -36,3 +36,7 @@ class SimpleJobSchema(BaseModel):
     # company_size: Annotated[str, StringConstraints(max_length=128)]
     # welfare: Annotated[str, StringConstraints(max_length=128)]
     category: Annotated[str, StringConstraints(max_length=128)]
+
+
+class GPT_Input(BaseModel):
+    input: str

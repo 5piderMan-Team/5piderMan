@@ -1,3 +1,4 @@
+import logging
 from pathlib import Path
 from typing import Any
 
@@ -47,7 +48,7 @@ def load(key: str, default: Any = None) -> Any:
 
 # OpenAI API Key
 OPENAI_API_KEY = load("OPENAI_API_KEY")
-OPENAI_HOST = load("OPENAI_HOST")
+OPENAI_API_HOST = load("OPENAI_API_HOST")
 # 数据库连接字符串
 DB_TYPE = try_to_load_str("DB_TYPE")
 DB_API = try_to_load_str("DB_API")
@@ -61,3 +62,5 @@ DB_URL = f"{DB_TYPE}+{DB_API}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_
 HOST = load("HOST", "0.0.0.0")
 # 监听端口
 PORT = load("PORT", 8080)
+
+logging.error(OPENAI_API_HOST)

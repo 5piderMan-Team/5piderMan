@@ -1,6 +1,7 @@
 import time
 
 from fastapi import APIRouter, Depends
+from fastapi.logger import logger
 from sqlalchemy.orm import Session
 
 from . import db, schemas, services
@@ -59,6 +60,7 @@ company_cached = cache(services.get_company_analysis)
 category_cached = cache(services.get_category_analysis)
 experience_cached = cache(services.get_experience_analysis)
 
+
 @router.get("/analyze/{item}", response_model=dict[str, int])
 async def get_analyze(item: str, session: Session = Depends(get_session)):
     match item:
@@ -81,3 +83,9 @@ async def get_analyze(item: str, session: Session = Depends(get_session)):
         case _:
             print("invalid path parameters")
             return {"error": 404}
+
+
+@router.post("/gpt", response_model=str)
+async def gpt(request: schemas.GPT_Input):
+    logger.warn(request)
+    return services.gpt(request.input)
