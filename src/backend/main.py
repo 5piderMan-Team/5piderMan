@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 
 from . import db, models, routers
-from .config import settings
+from .config import HOST, PORT
 
 staticdir = Path(__file__).parent.parent.parent.joinpath("web/dist")
 # 目前采用 src 目录结构，导致打包时静态文件路径和开发时不一致，暂时先这样处理。
@@ -59,4 +59,4 @@ def create_tables() -> None:
 def main() -> None:
     # create_tables()
 
-    uvicorn.run("backend.main:app", host=settings.host, port=settings.port, reload=True)
+    uvicorn.run("backend.main:app", host=HOST, port=PORT, reload=True)

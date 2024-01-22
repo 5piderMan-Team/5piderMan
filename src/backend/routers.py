@@ -7,12 +7,15 @@ from . import db, schemas, services
 
 
 def cache(func):
+    # 缓存
     cache = None
+    # 缓存开始时间
     bg = time.time()
 
     def wrapper(*args, **kwargs):
         nonlocal cache
         nonlocal bg
+        # 如果缓存不存在或者缓存时间超过 1 小时，重新获取
         if cache is None:
             cache = func(*args, **kwargs)
             bg = time.time()
