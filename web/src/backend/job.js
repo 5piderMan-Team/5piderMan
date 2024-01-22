@@ -71,6 +71,11 @@ const getCategoryAnalyze = () => {
 };
 
 const getGPTRespond = (question) => {
+  // return Promise.resolve({
+  //   output: "很高兴为你服务",
+  //   type: "",
+  //   content: "",
+  // });
   return axios
     .post(serverUrl + "/api/gpt", { input: question })
     .then((response) => {

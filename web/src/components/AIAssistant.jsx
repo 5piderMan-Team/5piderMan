@@ -15,11 +15,11 @@ import { useSessionStorageState, useCounter } from "ahooks";
 
 const AIMessage = ({ message }) => {
   return (
-    <div className="flex justify-start">
+    <div className="flex justify-start mb-4">
       {/* avatar */}
       <RobotOutlined />
       {/* message */}
-      <div className="bg-white ml-2 p-2 rounded-sm shadow-sm shadow-gray-600">
+      <div className="bg-white ml-2 p-2 rounded-sm shadow-sm shadow-gray-600 max-w-xs">
         {message}
       </div>
     </div>
@@ -28,9 +28,9 @@ const AIMessage = ({ message }) => {
 
 const UserMessage = ({ message }) => {
   return (
-    <div className="flex justify-end mb-2">
+    <div className="flex justify-end mb-4">
       {/* message */}
-      <div className="bg-blue-400  mr-2 p-2 rounded-sm shadow-sm shadow-gray-600">
+      <div className="bg-blue-400 mr-2 p-2 rounded-sm shadow-sm shadow-gray-600 max-w-xs">
         {message}
       </div>
       {/* avatar */}
@@ -63,7 +63,7 @@ const ShowMessages = ({ messages, thinking = false }) => {
 */
 const handleGPTFunctionCall = (res) => {
   console.log(res);
-  if (res.type === null) {
+  if (res.type === null || res.type === "") {
     return res.output;
   }
 
@@ -127,6 +127,10 @@ const AIAssistant = () => {
     setCanSand(false);
   };
 
+  const clearMessages = () => {
+    setMessages([{ type: "ai", content: "你好，很荣幸为你服务", key: 0 }]);
+  };
+
   return (
     <>
       <div style={{ display: visible ? "block" : "none" }}>
@@ -137,7 +141,12 @@ const AIAssistant = () => {
             </div>
             <ShowMessages messages={messages} thinking={!canSand} />
             <div className="flex flex-row justify-between items-center ml-8 mr-8 mb-4">
-              <Button type="primary" shape="circle" icon={<UndoOutlined />} />
+              <Button
+                type="primary"
+                shape="circle"
+                icon={<UndoOutlined />}
+                onClick={clearMessages}
+              />
               <TextArea
                 showCount
                 maxLength={100}
