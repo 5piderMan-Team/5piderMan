@@ -8,17 +8,18 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Index />,
-    errorElement: <ErrorPage />,
   },
   {
     path: "/analyze",
     element: <Analyze />,
-    errorElement: <ErrorPage />,
   },
   {
     path: "/search",
     element: <SearchPage />,
-    errorElement: <ErrorPage />,
+  },
+  {
+    path: "*",
+    element: <ErrorPage />,
   },
 ]);
 

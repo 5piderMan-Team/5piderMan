@@ -4,17 +4,19 @@ const { Content } = Layout;
 import { Input } from "antd";
 const { Search } = Input;
 import { Table } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as Api from "../backend/job";
-import router from "../router";
+import { useSearchParams } from "react-router-dom";
 
 const SearchPage = () => {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
+  const [word, setWord] = useState(null);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const onSearch = (value) => {
     setLoading(true);
-    router.navigate(`/search?keyword=${value}`);
+    setSearchParams({ keyword: value });
     Api.searchJobs(value).then((data) => {
       let counter = 1;
       data.map((item) => {
@@ -25,6 +27,14 @@ const SearchPage = () => {
       setLoading(false);
     });
   };
+
+  useEffect(() => {
+    const keyword = searchParams.get("keyword");
+    if (keyword) {
+      setWord(keyword);
+      onSearch(keyword);
+    }
+  }, []);
 
   return (
     <Content className=" min-h-screen">
@@ -37,6 +47,10 @@ const SearchPage = () => {
           size="large"
           loading={loading}
           onSearch={onSearch}
+          value={word}
+          onInput={(e) => {
+            setWord(e.target.value);
+          }}
         />
         {result && (
           <Table
