@@ -198,5 +198,12 @@ def gpt(input: str):
                     type="search",
                     content=keyword,
                 )
+            case "job_filter_by_city":
+                city = argument.get("city", "")
+                return schemas.GPT_Output(
+                    output=f"正在为您筛选{city}的工作",
+                    type="city",
+                    content=city,
+                )
             case _:
                 return "错误，未知的工具调用"

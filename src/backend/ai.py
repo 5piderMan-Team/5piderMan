@@ -28,13 +28,30 @@ def gpt(input: str):
                     "properties": {
                         "keyword": {
                             "type": "string",
-                            "description": "搜索关键词",
+                            "description": "搜索关键词, 应尽量简洁。例如用户输入“我想找一个java开发的工作”，那么这里的关键词应该是“java”，而不是“java开发”或者“java工作”",
                         },
                     },
                     "required": ["keyword"],
                 },
             },
-        }
+        },
+        {
+            "type": "function",
+            "function": {
+                "name": "job_filter_by_city",
+                "description": "给用户展示某城市的工作",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "city": {
+                            "type": "string",
+                            "description": "城市中文名字。例如用户输入“我想找一个北京的工作”，那么city应该是“北京”，而不是“beijing”",
+                        },
+                    },
+                    "required": ["city"],
+                },
+            },
+        },
     ]
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo",

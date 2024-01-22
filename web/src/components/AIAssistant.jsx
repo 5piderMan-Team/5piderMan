@@ -75,7 +75,15 @@ const handleGPTFunctionCall = (res) => {
           resolve();
         }, 1000);
       });
-      return "正在为您跳转到Python搜索页面";
+      return "正在为您跳转到 " + res.content + " 搜索页面";
+    case "city":
+      new Promise((resolve, reject) => {
+        setTimeout(() => {
+          window.location.href = `/?city=${res.content}`;
+          resolve();
+        }, 1000);
+      });
+      return "正在为您跳转到 " + res.content + " 工作页面";
     default:
       return "未知操作： " + res.type + " " + res.content;
   }

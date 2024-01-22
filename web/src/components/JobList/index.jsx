@@ -2,6 +2,7 @@ import React from "react";
 import * as api from "../../backend/job";
 import { Select, Table } from "antd";
 import { Flex, Radio, Spin } from "antd";
+import { useSearchParams } from "react-router-dom";
 
 const columns = [
   {
@@ -91,10 +92,17 @@ export default function JobList(prop) {
   const [dataSource, setDataSource] = React.useState([]);
   const [city, setCity] = React.useState("全国");
   const [spinning, setSpinning] = React.useState(true);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   React.useEffect(() => {
+    const c = searchParams.get("city");
+    console.log(c);
+    if (c != "" && c != null) {
+      setCity(c);
+    }
+
     setSpinning(true);
-    api.getJobs(city).then((data) => {
+    api.getJobs(c).then((data) => {
       let counter = 1;
       data.map((item) => {
         item.key = counter++;
@@ -107,6 +115,7 @@ export default function JobList(prop) {
 
   const handleCityChange = (e) => {
     // console.log(e.target.value);
+    setSearchParams({ city: e.target.value });
     setCity(e.target.value);
   };
 
