@@ -20,14 +20,14 @@ def get_count_by_list(session: Session, pattern: list[str]) -> dict[str, int]:
 
 def get_city_analysis(session: Session) -> dict[str, int]:
     data = dao.group_count(session, "city")
-    data = sorted(data.items(), lambda x: x[1], reverse=True)
-    return dict(data[:20])
+    data = sorted(data.items(), key=lambda x: x[1], reverse=True)
+    return dict(data[:10])
 
 
 def get_education_analysis(session: Session) -> dict[str, int]:
     data = dao.group_count(session, "education")
-    data = sorted(data.items(), lambda x: x[1], reverse=True)
-    return data
+    data = sorted(data.items(), key=lambda x: x[1], reverse=True)
+    return dict(data)
 
 
 def get_position_analysis(session: Session) -> dict[str, int]:
@@ -121,28 +121,47 @@ def get_language_analysis(session: Session) -> dict[str, int]:
     return get_count_by_list(session, language)
 
 
-def get_salary_analysis(session: Session):
+def get_salary_analysis(session: Session) -> dict[str, int]:
     salary_data = dao.group_count(session, "salary")
-    histogram = dict()
+    histogram: dict[int, int] = dict()
     for k, v in salary_data.items():
         index = int(k.replace("k", "").split("-")[0])
         if index not in histogram.keys():
             histogram[index] = v
         else:
             histogram[index] += v
-    return {str(k) + "k": v for k, v in histogram.items()}
+
+    result: dict[str, int] = dict()
+    for k, v in histogram.items():
+        if k < 2:
+            result["0-2k"] = result.get("0-2k", 0) + v
+        elif k < 5:
+            result["2-5k"] = result.get("2-5k", 0) + v
+        elif k < 10:
+            result["5-10k"] = result.get("5-10k", 0) + v
+        elif k < 15:
+            result["10-15k"] = result.get("10-15k", 0) + v
+        elif k < 20:
+            result["15-20k"] = result.get("15-20k", 0) + v
+        elif k < 30:
+            result["20-30k"] = result.get("20-30k", 0) + v
+        elif k < 50:
+            result["30-50k"] = result.get("30-50k", 0) + v
+        else:
+            result["50k以上"] = result.get("50k以上", 0) + v
+    return result
 
 
 def get_company_analysis(session: Session):
     data = dao.group_count(session, "company_name")
     data = sorted(data.items(), key=lambda it: it[1], reverse=True)
-    return dict(data[:10])
+    return dict(data[:30])
 
 
 def get_category_analysis(session: Session):
     data = dao.group_count(session, "category")
     data = sorted(data.items(), key=lambda it: it[1], reverse=True)
-    return dict(data[:10])
+    return dict(data)
 
 
 def get_experience_analysis(session: Session):

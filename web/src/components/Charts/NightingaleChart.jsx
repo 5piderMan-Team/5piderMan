@@ -20,13 +20,20 @@ let optionSample = {
   //     subtext: "Fake Data",
   //     left: "center",
   //   },
-  toolbox: {
+  // toolbox: {
+  //   show: true,
+  //   feature: {
+  //     mark: { show: true },
+  //     // dataView: { show: true, readOnly: false },
+  //     // restore: { show: true },
+  //     // saveAsImage: { show: true },
+  //   },
+  // },
+  label: {
     show: true,
-    feature: {
-      mark: { show: true },
-      dataView: { show: true, readOnly: false },
-      restore: { show: true },
-      saveAsImage: { show: true },
+    formatter(param) {
+      // correct the percentage
+      return param.name + " (" + param.percent * 2 + "%)";
     },
   },
   series: [

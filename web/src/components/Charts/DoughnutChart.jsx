@@ -71,7 +71,7 @@ export default function DoughnutChart({ items, data, onChartReady, ...props }) {
     chartdata.push({ value: data[i], name: items[i] });
   }
   option.series[0].data = chartdata;
-  console.log(chartdata);
+  // console.log(chartdata);
   return (
     <EChartsReactCore
       echarts={echarts}

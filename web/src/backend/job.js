@@ -45,6 +45,30 @@ const getLanguagesAnalyze = () => {
   });
 };
 
+const getSalaryAnalyze = () => {
+  return axios.get(serverUrl + "/api/analyze/salary").then((response) => {
+    return response.data;
+  });
+};
+
+const getExperienceAnalyze = () => {
+  return axios.get(serverUrl + "/api/analyze/experience").then((response) => {
+    return response.data;
+  });
+};
+
+const getCompanyAnalyze = () => {
+  return axios.get(serverUrl + "/api/analyze/company_name").then((response) => {
+    return response.data;
+  });
+};
+
+const getCategoryAnalyze = () => {
+  return axios.get(serverUrl + "/api/analyze/category").then((response) => {
+    return response.data;
+  });
+};
+
 export {
   getJobs,
   getCitiesAnalyze,
@@ -52,4 +76,8 @@ export {
   getPositionbAnalyze,
   getLanguagesAnalyze,
   searchJobs,
+  getSalaryAnalyze,
+  getExperienceAnalyze,
+  getCompanyAnalyze,
+  getCategoryAnalyze,
 };
