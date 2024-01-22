@@ -19,11 +19,15 @@ def get_count_by_list(session: Session, pattern: list[str]) -> dict[str, int]:
 
 
 def get_city_analysis(session: Session) -> dict[str, int]:
-    return dao.group_count(session, "city")
+    data = dao.group_count(session, "city")
+    data = sorted(data.items(), lambda x: x[1], reverse=True)
+    return dict(data[:20])
 
 
 def get_education_analysis(session: Session) -> dict[str, int]:
-    return dao.group_count(session, "education")
+    data = dao.group_count(session, "education")
+    data = sorted(data.items(), lambda x: x[1], reverse=True)
+    return data
 
 
 def get_position_analysis(session: Session) -> dict[str, int]:
@@ -127,6 +131,27 @@ def get_salary_analysis(session: Session):
         else:
             histogram[index] += v
     return {str(k) + "k": v for k, v in histogram.items()}
+
+
+def get_company_analysis(session: Session):
+    data = dao.group_count(session, "company_name")
+    data = sorted(data.items(), key=lambda it: it[1], reverse=True)
+    return dict(data[:10])
+
+
+def get_category_analysis(session: Session):
+    data = dao.group_count(session, "category")
+    data = sorted(data.items(), key=lambda it: it[1], reverse=True)
+    return dict(data[:10])
+
+
+def get_experience_analysis(session: Session):
+    data = dao.group_count(session, "experience")
+    resp = dict()
+    for k, v in data.items():
+        index = k.replace("经验", "")
+        resp[index] = v
+    return {k: v for k, v in resp.items()}
 
 
 def job_search(keyword: str, session: Session):

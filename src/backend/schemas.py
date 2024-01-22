@@ -17,6 +17,7 @@ class JobSchema(BaseModel):
     financing_stage: Annotated[str, StringConstraints(max_length=128)]
     company_size: Annotated[str, StringConstraints(max_length=128)]
     welfare: Annotated[str, StringConstraints(max_length=128)]
+    category: Annotated[str, StringConstraints(max_length=128)]
 
 
 class SimpleJobSchema(BaseModel):
@@ -34,3 +35,4 @@ class SimpleJobSchema(BaseModel):
     # financing_stage: Annotated[str, StringConstraints(max_length=128)]
     # company_size: Annotated[str, StringConstraints(max_length=128)]
     # welfare: Annotated[str, StringConstraints(max_length=128)]
+    category: Annotated[str, StringConstraints(max_length=128)]
