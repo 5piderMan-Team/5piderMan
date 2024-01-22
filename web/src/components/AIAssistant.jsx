@@ -39,8 +39,7 @@ const UserMessage = ({ message }) => {
   );
 };
 
-const ShowMessages = ({ messages }) => {
-  // console.log(messages);
+const ShowMessages = ({ messages, thinking = false }) => {
   return (
     <div className="flex flex-col flex-grow p-4 overflow-y-auto">
       {messages.map((message) => {
@@ -50,6 +49,7 @@ const ShowMessages = ({ messages }) => {
           return <UserMessage message={message.content} key={message.key} />;
         }
       })}
+      {thinking && <AIMessage message="thinking..." />}
     </div>
   );
 };
@@ -93,7 +93,7 @@ const AIAssistant = () => {
             <div className="flex flex-row justify-between items-center p-4 border-b border-gray-300">
               <div className="text-lg font-bold">AI小助手</div>
             </div>
-            <ShowMessages messages={messages} />
+            <ShowMessages messages={messages} thinking={!canSand} />
             <div className="flex flex-row justify-between items-center ml-8 mr-8 mb-4">
               <Button type="primary" shape="circle" icon={<UndoOutlined />} />
               <TextArea
