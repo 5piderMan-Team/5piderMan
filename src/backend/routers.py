@@ -26,6 +26,7 @@ def cache(func):
 
 # FastAPI Dependency
 def get_session():
+    # 获得一个 session
     session = db.ScopedSession()
     try:
         yield session

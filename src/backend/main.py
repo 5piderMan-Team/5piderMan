@@ -25,12 +25,13 @@ app.add_middleware(
 
 
 @app.middleware("http")
-async def add_static_filter(request: Request, call_next):
+async def static_filter(request: Request, call_next):
     urlpath = request.url.path
     # 如果是 fastapi 相关的路由，直接返回
     if (
         urlpath.startswith("/api")
         or urlpath.startswith("/docs")
+        or urlpath.startswith("/redoc")
         or urlpath == "/openapi.json"
     ):
         return await call_next(request)
