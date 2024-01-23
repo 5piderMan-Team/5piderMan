@@ -62,5 +62,3 @@ DB_URL = f"{DB_TYPE}+{DB_API}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_
 HOST = load("HOST", "0.0.0.0")
 # 监听端口
 PORT = load("PORT", 8080)
-
-logging.error(OPENAI_API_HOST)

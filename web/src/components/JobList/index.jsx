@@ -97,12 +97,14 @@ export default function JobList(prop) {
   React.useEffect(() => {
     const c = searchParams.get("city");
     console.log(c);
+    let rc = city;
     if (c != "" && c != null) {
       setCity(c);
+      rc = c;
     }
 
     setSpinning(true);
-    api.getJobs(c).then((data) => {
+    api.getJobs(rc).then((data) => {
       let counter = 1;
       data.map((item) => {
         item.key = counter++;
