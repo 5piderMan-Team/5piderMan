@@ -123,6 +123,7 @@ export default function JobList(prop) {
 
   const handleCitySelect = (e) => {
     // console.log(e);
+    setSearchParams({ city: e });
     setCity(e);
   };
 
